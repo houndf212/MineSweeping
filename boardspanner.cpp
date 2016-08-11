@@ -32,6 +32,7 @@ void BoardSpanner::open(Board &b, const Pos &p)
     case PosStatus::Number6:
     case PosStatus::Number7:
     case PosStatus::Number8:
+    case PosStatus::Flaged:
 //        cout<<"find number: "<<p<<", "<<char(s)<<endl;
         b.setPos_u(p, s);
         break;
@@ -47,5 +48,8 @@ void BoardSpanner::open(Board &b, const Pos &p)
         open(b, Pos(p.row+1, p.col));
         open(b, Pos(p.row+1, p.col+1));
         break;
+    case PosStatus::Mine:
+    default:
+        assert(false);
     }
 }

@@ -1,7 +1,7 @@
 ﻿#include "boardprinter.h"
 #include <iostream>
 
-void BoardPrinter::print(const PosMatrix &m)
+void BoardPrinter::print(const StatusMatrix &m)
 {
     std::cout << "---------------"<<std::endl;
     for (int row=0; row<m.row_size(); ++row)

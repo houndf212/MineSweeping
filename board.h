@@ -1,19 +1,21 @@
 ﻿#ifndef BOARD_H
 #define BOARD_H
-#include "posmatrix.h"
-#include "assert.h"
+#include "statusmatrix.h"
 
 class Board
 {
+    friend class PosInfo;
     friend class BoardGen;
     friend class BoardSpanner;
     friend class BoardPrinter;
 public:
     Board();
     void reset(int row, int col, int n);
+    bool isInBoard(const Pos& p) const;
 public:
     //user interface, return false, game over
-    bool flagPos(const Pos& p, PosStatus status);
+    void flagPos(const Pos& p);
+    void unflagPos(Pos p);
     bool clickPos(const Pos& p, PosStatus* s = nullptr);
     bool doubleCheck(const Pos& p);
 public:
@@ -30,10 +32,9 @@ private:
 
 private:
     void checkBound(const Pos& p) const;
-    bool isInBoard(const Pos& p) const;
 private:
-    PosMatrix real_matrix;
-    PosMatrix user_matrix;
+    StatusMatrix real_matrix;
+    StatusMatrix user_matrix;
     int mine_num;
 };
 

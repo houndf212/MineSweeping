@@ -6,17 +6,21 @@ CONFIG -= qt
 SOURCES += main.cpp \
     board.cpp \
     pos.cpp \
-    posmatrix.cpp \
     boardprinter.cpp \
     boardgen.cpp \
-    boardspanner.cpp
+    boardspanner.cpp \
+    statusmatrix.cpp \
+    matrixfinder.cpp \
+    posinfo.cpp
 
 HEADERS += \
     board.h \
     pos.h \
     posstatus.h \
-    posmatrix.h \
     boardprinter.h \
     boardgen.h \
-    boardspanner.h
+    boardspanner.h \
+    statusmatrix.h \
+    matrixfinder.h \
+    posinfo.h
 

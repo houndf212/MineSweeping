@@ -8,7 +8,7 @@ public:
     static void print_r(const Board& b) { print(b.real_matrix); }
     static void print_u(const Board& b) { print(b.user_matrix); }
 private:
-    static void print(const PosMatrix& m);
+    static void print(const StatusMatrix& m);
 };
 
 #endif // BOARDPRINTER_H

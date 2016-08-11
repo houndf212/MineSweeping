@@ -4,8 +4,9 @@
 
 class BoardGen
 {
-    friend class Board;
+public:
     static void Gen(Board& b);
+private:
     static void cleanRealMatrix(Board& b);
     static vector<int> randRang(int s, int n);
     static vector<Pos> transIndex(const vector<int>& vec, int rowlen);

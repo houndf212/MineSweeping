@@ -31,7 +31,7 @@ vector<int> BoardGen::randRang(int s, int n)
     assert(0<=s && s<n);
 
     //先用 std 简单解决
-    vector<int> vec(n);
+    vector<int> vec(n, 0);
     for (int i=0; i<n; ++i)
         vec[i] = i;
 
