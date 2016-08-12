@@ -3,10 +3,9 @@
 
 enum class PosStatus
 {
-
-    Blank = '#',
-    Flaged = 'F',
-    Mine = '*',
+    Blank   = '#',
+    Flaged  = 'F',
+    Mine    = '*',
     UnKnown = '?',
     Number1 = '1',
     Number2 = '2',

@@ -54,6 +54,7 @@ void StatusMatrix::checkBound(Pos p) const
 bool StatusMatrix::equal(const StatusMatrix &m1, const StatusMatrix &m2)
 {
     assert(m1.row_size()==m2.row_size() && m1.col_size()==m2.col_size());
+
     for (auto iter=m1.begin(); iter!=m1.end(); ++iter)
     {
         if (*iter != m2(iter.toPos()))
