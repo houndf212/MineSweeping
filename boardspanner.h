@@ -5,9 +5,9 @@
 class BoardSpanner
 {
 public:
-    static void span(Board& b, const Pos& p);
+    static void span(Board& b, Pos p);
 private:
-    static void open(Board& b, const Pos& p);
+    static void open(Board& b, Pos p);
 };
 
 #endif // BOARDSPANNER_H

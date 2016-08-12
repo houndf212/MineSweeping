@@ -11,7 +11,10 @@ SOURCES += main.cpp \
     boardspanner.cpp \
     statusmatrix.cpp \
     matrixfinder.cpp \
-    posinfo.cpp
+    posinfo.cpp \
+    humanplayer.cpp \
+    matrixiter.cpp \
+    doubleclicksolver.cpp
 
 HEADERS += \
     board.h \
@@ -22,5 +25,8 @@ HEADERS += \
     boardspanner.h \
     statusmatrix.h \
     matrixfinder.h \
-    posinfo.h
+    posinfo.h \
+    humanplayer.h \
+    matrixiter.h \
+    doubleclicksolver.h
 

@@ -1,54 +1,18 @@
 ﻿#include <iostream>
 #include "board.h"
-#include "boardprinter.h"
+#include "humanplayer.h"
+#include <time.h>
 using namespace std;
 
 int main()
 {
+    std::srand(time(0));
+
     Board b;
-    b.reset(10, 40, 30);
-    BoardPrinter::print_r(b);
-    BoardPrinter::print_u(b);
-    bool a = true;
-    do{
-        char c;
-        while (true)
-        {
-            cout<<"input method:"<<endl;
-            cin>>c;
-            if (c=='c' || c=='f' || c=='d' || c=='u')
-                break;
-            else
-                cout<<"input wrong!\n c for click\n f for flag\n d for double click"<<endl;
-        }
+    b.reset(10, 10, 5);
 
-        Pos p(0,0);
-        while (true)
-        {
-            cout<<"input pos:"<<endl;
-            cin>>p;
-            if (b.isInBoard(p))
-                break;
-            else
-                cout<<"out of rang, input again!";
-        }
-        switch(c)
-        {
-        case 'c':
-            a = b.clickPos(p);
-            break;
-        case 'f':
-            b.flagPos(p);
-            break;
-        case 'u':
-            b.unflagPos(p);
-            break;
-        }
+    HumanPlayer::play(b);
 
-        BoardPrinter::print_r(b);
-        BoardPrinter::print_u(b);
-    }
-    while (a);
     system("pause");
     return 0;
 }

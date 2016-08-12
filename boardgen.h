@@ -9,9 +9,8 @@ public:
 private:
     static void cleanRealMatrix(Board& b);
     static vector<int> randRang(int s, int n);
-    static vector<Pos> transIndex(const vector<int>& vec, int rowlen);
-    static vector<Pos> randPos(Board& b);
-    static void calNum(Board& b, const vector<Pos>& vec);
+    static vector<MatrixIter> randPos(Board& b);
+    static void calNum(Board& b, const vector<MatrixIter> &vec);
 };
 
 #endif // BOARDGEN_H

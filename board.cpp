@@ -2,6 +2,9 @@
 #include "boardgen.h"
 #include "boardspanner.h"
 #include "posinfo.h"
+#include <iostream>
+using std::cout;
+using std::endl;
 
 Board::Board()
 {
@@ -11,24 +14,31 @@ Board::Board()
 void Board::reset(int row, int col, int n)
 {
     mine_num = n;
+    flagged_num = 0;
     real_matrix.resize(row, col, PosStatus::Blank);
     BoardGen::Gen(*this);
     user_matrix.resize(row, col, PosStatus::UnKnown);
 }
 
-void Board::flagPos(const Pos &p)
+void Board::flagPos(Pos p)
 {
     if (getPos_u(p)==PosStatus::UnKnown)
+    {
         setPos_u(p, PosStatus::Flaged);
+        ++flagged_num;
+    }
 }
 
 void Board::unflagPos(Pos p)
 {
     if (getPos_u(p) == PosStatus::Flaged)
+    {
         setPos_u(p, PosStatus::UnKnown);
+        --flagged_num;
+    }
 }
 
-bool Board::clickPos(const Pos &p, PosStatus *s)
+bool Board::clickPos(Pos p, PosStatus *s)
 {
     checkBound(p);
 
@@ -65,7 +75,7 @@ bool Board::clickPos(const Pos &p, PosStatus *s)
     return true;
 }
 
-bool Board::doubleCheck(const Pos &p)
+bool Board::doubleClick(Pos p)
 {
     PosStatus s = getPos_u(p);
     switch(s)
@@ -73,6 +83,7 @@ bool Board::doubleCheck(const Pos &p)
     case PosStatus::Blank:
     case PosStatus::UnKnown:
     case PosStatus::Flaged:
+    case PosStatus::Mine:
         return true;
         break;
     case PosStatus::Number1:
@@ -83,33 +94,41 @@ bool Board::doubleCheck(const Pos &p)
     case PosStatus::Number6:
     case PosStatus::Number7:
     case PosStatus::Number8:
-        //TODO
-        break;
-    case PosStatus::Mine:
-        assert(false);
+    {
+        PosInfo info(p, *this);
+        cout << info.mine_num << ":"<<info.flagged_num<<":"<<info.unknow_num<<endl;
+        if (info.mine_num == info.flagged_num)
+        {
+            //如果标记完毕还有 unknow num 那么就有可能引爆
+            //mine num == flagged num
+            return info.openBlank();
+        }
+        else if (info.mine_num == info.flagged_num + info.unknow_num)
+        {
+            //mine num > flagged num
+            info.flagAll();
+            return true;
+        }
+        else
+        {
+            //标记多了
+            //mine num < flagged num
+            return true;
+        }
+    }
         break;
     }
     assert(false);
     return false;
 }
 
-PosStatus Board::getPos_u(const Pos &p) const
-{
-    return user_matrix(p);
-}
-
-PosStatus Board::getPos_r(const Pos &p) const
-{
-    return real_matrix(p);
-}
-
-void Board::setPos_r(const Pos &p, PosStatus s)
+void Board::setPos_r(Pos p, PosStatus s)
 {
     checkBound(p);
     real_matrix(p) = s;
 }
 
-bool Board::setPos_u(const Pos &p, PosStatus s)
+bool Board::setPos_u(Pos p, PosStatus s)
 {
     checkBound(p);
     PosStatus tmp = getPos_u(p);
@@ -122,12 +141,19 @@ bool Board::setPos_u(const Pos &p, PosStatus s)
     { return false; }
 }
 
-void Board::checkBound(const Pos &p) const
+void Board::checkBound(Pos p) const
 {
     assert(real_matrix.isInMatrix(p));
 }
 
-bool Board::isInBoard(const Pos &p) const
+bool Board::isDone() const
 {
-    return real_matrix.isInMatrix(p);
+    int unOpenedNum = 0;
+    for (auto it=user_matrix.begin(); it!=user_matrix.end(); ++it)
+    {
+        auto s = *it;
+        if (s==PosStatus::Flaged || s==PosStatus::UnKnown)
+            ++unOpenedNum;
+    }
+    return unOpenedNum == mine_num;
 }

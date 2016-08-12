@@ -1,5 +1,5 @@
 ﻿#include "boardgen.h"
-#include <ctime>
+
 #include <algorithm>
 
 void BoardGen::Gen(Board &b)
@@ -8,7 +8,7 @@ void BoardGen::Gen(Board &b)
     cleanRealMatrix(b);
 
     //第二步，选取随机mine
-    vector<Pos> vec = randPos(b);
+    vector<MatrixIter> vec = randPos(b);
 
     // 第三步，计算number
     calNum(b, vec);
@@ -16,12 +16,10 @@ void BoardGen::Gen(Board &b)
 
 void BoardGen::cleanRealMatrix(Board &b)
 {
-    for (int row=0; row<b.RowSize(); ++row)
+    StatusMatrix& m = b.real_matrix;
+    for (auto it = m.begin(); it!=m.end(); ++it)
     {
-        for (int col=0; col<b.ColSize(); ++col)
-        {
-            b.setPos_r(Pos(row, col), PosStatus::Blank);
-        }
+        *it = PosStatus::Blank;
     }
 }
 
@@ -35,38 +33,27 @@ vector<int> BoardGen::randRang(int s, int n)
     for (int i=0; i<n; ++i)
         vec[i] = i;
 
-    std::srand(time(0));
     std::random_shuffle(vec.begin(), vec.end());
     vec.resize(s);
     return vec;
 }
 
-vector<Pos> BoardGen::transIndex(const vector<int> &vec, int rowlen)
+vector<MatrixIter> BoardGen::randPos(Board &b)
 {
-    vector<Pos> ret;
-    for (int i=0; i<vec.size(); ++i)
+    int allsize = b.RowSize()*b.ColSize();
+    vector<int> vecIndex = randRang(b.MineNum(), allsize);
+    vector<MatrixIter> ret;
+    ret.reserve(vecIndex.size());
+    for (int i=0; i<vecIndex.size(); ++i)
     {
-        int v = vec.at(i);
-        int row = v / rowlen;
-        int col = v % rowlen;
-        ret.push_back(Pos(row, col));
+        MatrixIter iter(&b.real_matrix, vecIndex[i]);
+        *iter = PosStatus::Mine;
+        ret.push_back(iter);
     }
     return ret;
 }
 
-vector<Pos> BoardGen::randPos(Board &b)
-{
-    int allsize = b.RowSize()*b.ColSize();
-    vector<int> vecIndex = randRang(b.MineNum(), allsize);
-    vector<Pos> vec = transIndex(vecIndex, b.ColSize());
-    for (int i=0; i<vec.size(); ++i)
-    {
-        b.setPos_r(vec.at(i), PosStatus::Mine);
-    }
-    return vec;
-}
-
-void BoardGen::calNum(Board &b, const vector<Pos> &vec)
+void BoardGen::calNum(Board &b, const vector<MatrixIter> &vec)
 {
     auto addone = [&b](int row, int col)
     {
@@ -91,7 +78,7 @@ void BoardGen::calNum(Board &b, const vector<Pos> &vec)
 
     for (int i=0; i<vec.size(); ++i)
     {
-        Pos p = vec.at(i);
+        Pos p = vec.at(i).toPos();
         assert(b.getPos_r(p) == PosStatus::Mine);
         addone(p.row-1, p.col-1);
         addone(p.row-1, p.col);

@@ -2,13 +2,13 @@
 #include <iostream>
 using namespace std;
 
-void BoardSpanner::span(Board &b, const Pos &p)
+void BoardSpanner::span(Board &b, Pos p)
 {
     assert(b.getPos_r(p) == PosStatus::Blank);
     open(b, p);
 }
 
-void BoardSpanner::open(Board &b, const Pos &p)
+void BoardSpanner::open(Board &b, Pos p)
 {
     if (!b.isInBoard(p))
         return;
