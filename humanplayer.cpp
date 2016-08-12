@@ -61,5 +61,8 @@ bool HumanPlayer::play(Board &b)
         return true;
     }
     else
+    {
+        cout << "you click mine!"<<endl;
         return false;
+    }
 }

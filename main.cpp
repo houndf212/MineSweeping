@@ -9,11 +9,11 @@ int main()
     std::srand(time(0));
 
     Board b;
-    b.reset(10, 10, 5);
+    b.reset(8, 10, 30);
 
     HumanPlayer::play(b);
 
-    system("pause");
+//    system("pause");
     return 0;
 }
 

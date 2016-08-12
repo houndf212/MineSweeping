@@ -20,7 +20,7 @@ public:
     int col_size() const { return col_len; }
 public:
     void resize(int row, int col, PosStatus s);
-    PosStatus operator()(Pos p) const;
+    const PosStatus& operator()(Pos p) const;
     PosStatus& operator()(Pos p);
     bool isInMatrix(Pos p) const;
 private:

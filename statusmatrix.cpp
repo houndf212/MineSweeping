@@ -29,7 +29,7 @@ void StatusMatrix::resize(int row, int col, PosStatus s)
     matrix.resize(row, vector<PosStatus>(col, s));
 }
 
-PosStatus StatusMatrix::operator()(Pos p) const
+const PosStatus& StatusMatrix::operator()(Pos p) const
 {
     checkBound(p);
     return matrix[p.row][p.col];

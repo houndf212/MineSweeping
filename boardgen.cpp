@@ -44,7 +44,7 @@ vector<MatrixIter> BoardGen::randPos(Board &b)
     vector<int> vecIndex = randRang(b.MineNum(), allsize);
     vector<MatrixIter> ret;
     ret.reserve(vecIndex.size());
-    for (int i=0; i<vecIndex.size(); ++i)
+    for (size_t i=0; i<vecIndex.size(); ++i)
     {
         MatrixIter iter(&b.real_matrix, vecIndex[i]);
         *iter = PosStatus::Mine;
@@ -71,12 +71,11 @@ void BoardGen::calNum(Board &b, const vector<MatrixIter> &vec)
       else
       {
           int v = int(b.getPos_r(p));
-          ++v;
-          b.setPos_r(p, PosStatus(v));
+          b.setPos_r(p, PosStatus(++v));
       }
     };
 
-    for (int i=0; i<vec.size(); ++i)
+    for (size_t i=0; i<vec.size(); ++i)
     {
         Pos p = vec.at(i).toPos();
         assert(b.getPos_r(p) == PosStatus::Mine);
