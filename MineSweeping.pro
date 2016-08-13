@@ -9,24 +9,24 @@ SOURCES += main.cpp \
     boardprinter.cpp \
     boardgen.cpp \
     boardspanner.cpp \
-    statusmatrix.cpp \
     matrixfinder.cpp \
     posinfo.cpp \
     humanplayer.cpp \
     matrixiter.cpp \
-    doubleclicksolver.cpp
+    doubleclicksolver.cpp \
+    matrix.cpp
 
 HEADERS += \
     board.h \
     pos.h \
-    posstatus.h \
     boardprinter.h \
     boardgen.h \
     boardspanner.h \
-    statusmatrix.h \
     matrixfinder.h \
     posinfo.h \
     humanplayer.h \
     matrixiter.h \
-    doubleclicksolver.h
+    doubleclicksolver.h \
+    matrix.h \
+    status.h
 

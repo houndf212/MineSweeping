@@ -5,12 +5,13 @@
 class BoardGen
 {
 public:
-    static void Gen(Board& b);
+    static void Gen(Matrix* m, int n);
 private:
-    static void cleanRealMatrix(Board& b);
+    static void cleanRealMatrix(Matrix *m);
     static vector<int> randRang(int s, int n);
-    static vector<MatrixIter> randPos(Board& b);
-    static void calNum(Board& b, const vector<MatrixIter> &vec);
+    static vector<MatrixIter> randPos(Matrix* m, int n);
+    static void calNum(Matrix* m, const vector<MatrixIter> &vec);
+    static void addone(Matrix* m, int row, int col);
 };
 
 #endif // BOARDGEN_H

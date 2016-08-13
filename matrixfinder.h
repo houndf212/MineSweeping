@@ -1,11 +1,13 @@
 ﻿#ifndef MATRIXFINDER_H
 #define MATRIXFINDER_H
-#include "statusmatrix.h"
+#include "matrix.h"
 
 class MatrixFinder
 {
 public:
-    MatrixFinder();
+    //找到一块空白的区域
+    static bool findBlankArea(const Matrix& m, Pos* p);
+    static bool checkAroundIsBlank(const Matrix& m, Pos p);
 };
 
 #endif // MATRIXFINDER_H

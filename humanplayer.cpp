@@ -46,7 +46,7 @@ bool HumanPlayer::play(Board &b)
             b.unflagPos(p);
             break;
         case 'd':
-            b.doubleClick(p);
+            a = b.doubleClick(p);
             break;
         }
 

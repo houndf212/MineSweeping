@@ -1,10 +1,16 @@
 ﻿#include "doubleclicksolver.h"
 #include <stdlib.h>
 
-bool DoubleClickSolver::solve(Board &b)
+DoubleClickSolver::DoubleClickSolver(const Board &b)
+    :board(b)
 {
 
 }
+
+//bool DoubleClickSolver::solve()
+//{
+
+//}
 
 int DoubleClickSolver::rand(int n)
 {

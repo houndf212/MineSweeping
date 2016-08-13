@@ -1,7 +1,7 @@
 ﻿#include "matrixiter.h"
-#include "statusmatrix.h"
+#include "matrix.h"
 
-MatrixIter::MatrixIter(StatusMatrix *m, int i)
+MatrixIter::MatrixIter(Matrix *m, int i)
     :matrix(m)
     ,index(i)
 {
@@ -14,9 +14,10 @@ MatrixIter &MatrixIter::operator++()
     return *this;
 }
 
-PosStatus &MatrixIter::operator*()
+Status &MatrixIter::operator*()
 {
-    return matrix->operator ()(toPos());
+    Pos p = toPos();
+    return matrix->matrix[p.row][p.col];
 }
 
 Pos MatrixIter::toPos() const
@@ -24,7 +25,7 @@ Pos MatrixIter::toPos() const
     return Pos(index/matrix->col_size(), index%matrix->col_size());
 }
 
-MatrixCIter::MatrixCIter(const StatusMatrix *m, int i)
+MatrixCIter::MatrixCIter(const Matrix *m, int i)
     :matrix(m)
     ,index(i)
 {
@@ -37,9 +38,10 @@ MatrixCIter &MatrixCIter::operator++()
     return *this;
 }
 
-const PosStatus &MatrixCIter::operator*()
+const Status &MatrixCIter::operator*()
 {
-    return matrix->operator ()(toPos());
+    Pos p = toPos();
+    return matrix->matrix[p.row][p.col];
 }
 
 Pos MatrixCIter::toPos() const

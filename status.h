@@ -1,11 +1,10 @@
-﻿#ifndef POSSTATUS
-#define POSSTATUS
+﻿#ifndef STATUS_H
+#define STATUS_H
 
-enum class PosStatus
+enum class Status
 {
     Blank   = '#',
-    Flaged  = 'F',
-    Mine    = '*',
+    Flagged = 'F',
     UnKnown = '?',
     Number1 = '1',
     Number2 = '2',
@@ -17,5 +16,5 @@ enum class PosStatus
     Number8 = '8',
 };
 
-#endif // POSSTATUS
+#endif // STATUS_H
 

@@ -11,62 +11,77 @@ Board::Board()
     reset(20, 70, 50);
 }
 
+void Board::reset(MineLevel l)
+{
+    switch (l)
+    {
+    case MineLevel::Small:
+        reset(9, 9, 10);
+        break;
+    case MineLevel::Medium:
+        reset(16, 16, 40);
+        break;
+    case MineLevel::Large:
+        reset(16, 30, 99);
+        break;
+    }
+}
+
 void Board::reset(int row, int col, int n)
 {
     mine_num = n;
     flagged_num = 0;
-    real_matrix.resize(row, col, PosStatus::Blank);
-    BoardGen::Gen(*this);
-    user_matrix.resize(row, col, PosStatus::UnKnown);
+    real_matrix.resize(row, col, Status::Blank);
+    BoardGen::Gen(&real_matrix, mine_num);
+    user_matrix.resize(row, col, Status::UnKnown);
 }
 
 void Board::flagPos(Pos p)
 {
-    if (getPos_u(p)==PosStatus::UnKnown)
+    if (getPos_u(p)==Status::UnKnown)
     {
-        setPos_u(p, PosStatus::Flaged);
+        setPos_u(p, Status::Flagged);
         ++flagged_num;
     }
 }
 
 void Board::unflagPos(Pos p)
 {
-    if (getPos_u(p) == PosStatus::Flaged)
+    if (getPos_u(p) == Status::Flagged)
     {
-        setPos_u(p, PosStatus::UnKnown);
+        setPos_u(p, Status::UnKnown);
         --flagged_num;
     }
 }
 
-bool Board::clickPos(Pos p, PosStatus *s)
+bool Board::clickPos(Pos p)
 {
     checkBound(p);
 
     //如果已经是已知类型，直接返回
-    PosStatus us = getPos_u(p);
-    if (us!=PosStatus::UnKnown)
+    Status us = getPos_u(p);
+    if (us!=Status::UnKnown)
         return true;
 
-    PosStatus tmp = getPos_r(p);
-    if (s) *s = tmp;
+    Status tmp = getPos_r(p);
 
     switch(tmp)
     {
-    case PosStatus::Mine:
+    case Status::Flagged:
         user_matrix = real_matrix;
         return false;
         break;
-    case PosStatus::Number1:
-    case PosStatus::Number2:
-    case PosStatus::Number3:
-    case PosStatus::Number4:
-    case PosStatus::Number5:
-    case PosStatus::Number6:
-    case PosStatus::Number7:
-    case PosStatus::Number8:
+    case Status::Number1:
+    case Status::Number2:
+    case Status::Number3:
+    case Status::Number4:
+    case Status::Number5:
+    case Status::Number6:
+    case Status::Number7:
+    case Status::Number8:
         setPos_u(p, tmp);
         break;
-    case PosStatus::Blank:
+    case Status::Blank:
         BoardSpanner::span(*this, p);
         break;
     default:
@@ -77,23 +92,23 @@ bool Board::clickPos(Pos p, PosStatus *s)
 
 bool Board::doubleClick(Pos p)
 {
-    PosStatus s = getPos_u(p);
+    Status s = getPos_u(p);
     switch(s)
     {
-    case PosStatus::Blank:
-    case PosStatus::UnKnown:
-    case PosStatus::Flaged:
-    case PosStatus::Mine:
+    case Status::Blank:
+    case Status::UnKnown:
+    case Status::Flagged:
+//    case Status::Mine:
         return true;
         break;
-    case PosStatus::Number1:
-    case PosStatus::Number2:
-    case PosStatus::Number3:
-    case PosStatus::Number4:
-    case PosStatus::Number5:
-    case PosStatus::Number6:
-    case PosStatus::Number7:
-    case PosStatus::Number8:
+    case Status::Number1:
+    case Status::Number2:
+    case Status::Number3:
+    case Status::Number4:
+    case Status::Number5:
+    case Status::Number6:
+    case Status::Number7:
+    case Status::Number8:
     {
         PosInfo info(p, *this);
         cout << info.mine_num << ":"<<info.flagged_num<<":"<<info.unknow_num<<endl;
@@ -122,19 +137,19 @@ bool Board::doubleClick(Pos p)
     return false;
 }
 
-void Board::setPos_r(Pos p, PosStatus s)
+void Board::setPos_r(Pos p, Status s)
 {
     checkBound(p);
-    real_matrix(p) = s;
+    real_matrix.set(p, s);
 }
 
-bool Board::setPos_u(Pos p, PosStatus s)
+bool Board::setPos_u(Pos p, Status s)
 {
     checkBound(p);
-    PosStatus tmp = getPos_u(p);
-    if (tmp == PosStatus::UnKnown || tmp == PosStatus::Flaged)
+    Status tmp = getPos_u(p);
+    if (tmp == Status::UnKnown || tmp == Status::Flagged)
     {
-        user_matrix(p) = s;
+        user_matrix.set(p, s);
         return true;
     }
     else
@@ -149,11 +164,11 @@ void Board::checkBound(Pos p) const
 bool Board::isDone() const
 {
     int unOpenedNum = 0;
-    for (auto it=user_matrix.begin(); it!=user_matrix.end(); ++it)
+    for (MatrixCIter it=user_matrix.begin(), end=user_matrix.end(); it!=end; ++it)
     {
-        auto s = *it;
-        if (s==PosStatus::Flaged || s==PosStatus::UnKnown)
+        Status s = *it;
+        if (s==Status::Flagged || s==Status::UnKnown)
             ++unOpenedNum;
     }
-    return unOpenedNum == mine_num;
+    return unOpenedNum <= mine_num+1;
 }

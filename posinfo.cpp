@@ -55,16 +55,16 @@ void PosInfo::getNum(Pos p)
 {
     if (board.isInBoard(p))
     {
-        if (board.getPos_u(p)==PosStatus::UnKnown)
+        if (board.getPos_u(p)==Status::UnKnown)
             ++unknow_num;
-        else if (board.getPos_u(p)== PosStatus::Flaged)
+        else if (board.getPos_u(p)== Status::Flagged)
             ++flagged_num;
     }
 }
 
 bool PosInfo::clickPos(Pos p) const
 {
-    if (board.isInBoard(p) && board.getPos_u(p) == PosStatus::UnKnown)
+    if (board.isInBoard(p) && board.getPos_u(p) == Status::UnKnown)
         return board.clickPos(p);
     else
         return true;
@@ -72,6 +72,6 @@ bool PosInfo::clickPos(Pos p) const
 
 void PosInfo::flagPos(Pos p) const
 {
-    if (board.isInBoard(p) && board.getPos_u(p) == PosStatus::UnKnown)
+    if (board.isInBoard(p) && board.getPos_u(p) == Status::UnKnown)
         board.flagPos(p);
 }

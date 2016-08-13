@@ -5,8 +5,12 @@
 class DoubleClickSolver
 {
 public:
-    static bool solve(Board& b);
+    explicit DoubleClickSolver(const Board& b);
+    bool solve();
+private:
     static int rand(int n);
+private:
+    Board board;
 };
 
 #endif // DOUBLECLICKSOLVER_H

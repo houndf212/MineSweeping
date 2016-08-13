@@ -4,7 +4,7 @@ using namespace std;
 
 void BoardSpanner::span(Board &b, Pos p)
 {
-    assert(b.getPos_r(p) == PosStatus::Blank);
+    assert(b.getPos_r(p) == Status::Blank);
     open(b, p);
 }
 
@@ -13,30 +13,30 @@ void BoardSpanner::open(Board &b, Pos p)
     if (!b.isInBoard(p))
         return;
 
-    if (b.getPos_u(p) != PosStatus::UnKnown)
+    //跳过用户标记块以及已经打开的块
+    if (b.getPos_u(p) != Status::UnKnown)
     {
 //        cout<<"checked pos: "<< p <<endl;
         return;
     }
 
-    PosStatus s = b.getPos_r(p);
-    assert(s != PosStatus::Mine);
+    Status s = b.getPos_r(p);
+    assert(s != Status::Flagged);
 
     switch(s)
     {
-    case PosStatus::Number1:
-    case PosStatus::Number2:
-    case PosStatus::Number3:
-    case PosStatus::Number4:
-    case PosStatus::Number5:
-    case PosStatus::Number6:
-    case PosStatus::Number7:
-    case PosStatus::Number8:
-    case PosStatus::Flaged:
+    case Status::Number1:
+    case Status::Number2:
+    case Status::Number3:
+    case Status::Number4:
+    case Status::Number5:
+    case Status::Number6:
+    case Status::Number7:
+    case Status::Number8:
 //        cout<<"find number: "<<p<<", "<<char(s)<<endl;
         b.setPos_u(p, s);
         break;
-    case PosStatus::Blank:
+    case Status::Blank:
 //        cout<<"find blank: "<<p<<endl;
         b.setPos_u(p, s);
         open(b, Pos(p.row-1, p.col-1));
@@ -48,7 +48,8 @@ void BoardSpanner::open(Board &b, Pos p)
         open(b, Pos(p.row+1, p.col));
         open(b, Pos(p.row+1, p.col+1));
         break;
-    case PosStatus::Mine:
+//    case Status::Mine:
+    case Status::Flagged:
     default:
         assert(false);
     }

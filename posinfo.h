@@ -1,6 +1,6 @@
 ﻿#ifndef POSINFO_H
 #define POSINFO_H
-#include "statusmatrix.h"
+#include "matrix.h"
 #include "board.h"
 
 class PosInfo

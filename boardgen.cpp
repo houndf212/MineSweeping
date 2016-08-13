@@ -1,25 +1,23 @@
 ﻿#include "boardgen.h"
-
 #include <algorithm>
 
-void BoardGen::Gen(Board &b)
+void BoardGen::Gen(Matrix *m, int n)
 {
     //第一步，所有设置为 unknow
-    cleanRealMatrix(b);
+    cleanRealMatrix(m);
 
     //第二步，选取随机mine
-    vector<MatrixIter> vec = randPos(b);
+    vector<MatrixIter> vec = randPos(m, n);
 
     // 第三步，计算number
-    calNum(b, vec);
+    calNum(m, vec);
 }
 
-void BoardGen::cleanRealMatrix(Board &b)
+void BoardGen::cleanRealMatrix(Matrix *m)
 {
-    StatusMatrix& m = b.real_matrix;
-    for (auto it = m.begin(); it!=m.end(); ++it)
+    for (MatrixIter it=m->begin(), end=m->end(); it!=end; ++it)
     {
-        *it = PosStatus::Blank;
+        *it = Status::Blank;
     }
 }
 
@@ -38,55 +36,55 @@ vector<int> BoardGen::randRang(int s, int n)
     return vec;
 }
 
-vector<MatrixIter> BoardGen::randPos(Board &b)
+vector<MatrixIter> BoardGen::randPos(Matrix *m, int n)
 {
-    int allsize = b.RowSize()*b.ColSize();
-    vector<int> vecIndex = randRang(b.MineNum(), allsize);
+    int allsize = m->row_size()*m->col_size();
+    vector<int> vecIndex = randRang(n, allsize);
     vector<MatrixIter> ret;
     ret.reserve(vecIndex.size());
     for (size_t i=0; i<vecIndex.size(); ++i)
     {
-        MatrixIter iter(&b.real_matrix, vecIndex[i]);
-        *iter = PosStatus::Mine;
+        MatrixIter iter(m, vecIndex[i]);
+        *iter = Status::Flagged;
         ret.push_back(iter);
     }
     return ret;
 }
 
-void BoardGen::calNum(Board &b, const vector<MatrixIter> &vec)
+void BoardGen::calNum(Matrix *m, const vector<MatrixIter> &vec)
 {
-    auto addone = [&b](int row, int col)
-    {
-      Pos p(row, col);
-
-      if (!b.isInBoard(p))
-          return;
-
-      PosStatus s = b.getPos_r(p);
-      if (s==PosStatus::Mine)
-          return;
-
-      if (s==PosStatus::Blank)
-      { b.setPos_r(p, PosStatus::Number1); }
-      else
-      {
-          int v = int(b.getPos_r(p));
-          b.setPos_r(p, PosStatus(++v));
-      }
-    };
-
     for (size_t i=0; i<vec.size(); ++i)
     {
         Pos p = vec.at(i).toPos();
-        assert(b.getPos_r(p) == PosStatus::Mine);
-        addone(p.row-1, p.col-1);
-        addone(p.row-1, p.col);
-        addone(p.row-1, p.col+1);
-        addone(p.row, p.col-1);
-        addone(p.row, p.col+1);
-        addone(p.row+1, p.col-1);
-        addone(p.row+1, p.col);
-        addone(p.row+1, p.col+1);
+        assert(m->get(p) == Status::Flagged);
+        addone(m, p.row-1, p.col-1);
+        addone(m, p.row-1, p.col);
+        addone(m, p.row-1, p.col+1);
+        addone(m, p.row, p.col-1);
+        addone(m, p.row, p.col+1);
+        addone(m, p.row+1, p.col-1);
+        addone(m, p.row+1, p.col);
+        addone(m, p.row+1, p.col+1);
+    }
+}
+
+void BoardGen::addone(Matrix *m, int row, int col)
+{
+    Pos p(row, col);
+
+    if (!m->isInMatrix(p))
+        return;
+
+    Status s = m->get(p);
+    if (s==Status::Flagged)
+        return;
+
+    if (s==Status::Blank)
+    { m->set(p, Status::Number1); }
+    else
+    {
+        int v = int(m->get(p));
+        m->set(p, Status(++v));
     }
 }
 
