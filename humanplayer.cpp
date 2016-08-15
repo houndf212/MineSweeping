@@ -18,7 +18,13 @@ bool HumanPlayer::play(Board &b)
             cout<<char(p.first)<<":"<<p.second.size()<<endl;
         }
         Slicer sl(b.getViewMatrix());
-        cout<< "unknow group size: "<<sl.group.size()<<endl;
+        for (const auto& t : sl.group)
+        {
+            cout<<"##"<<endl;
+            cout<<std::get<0>(t).size()<<endl;
+            cout<<std::get<1>(t).size()<<endl;
+            cout<<std::get<2>(t).size()<<endl;
+        }
 
         if (b.isDone())
         {

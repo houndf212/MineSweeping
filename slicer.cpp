@@ -12,7 +12,7 @@ Slicer::Slicer(const Matrix &m)
     {
         if (*it!=Status::Flagged && m.get(it.toPos())==Status::UnKnown)
         {
-            group.push_back(Group(PosSet(), PosSet()));
+            group.resize(group.size()+1);
             findGroup(&group.back(), m, it.toPos());
 
         }
@@ -26,7 +26,7 @@ void Slicer::findGroup(Group *ps, const Matrix &m, Pos p)
         m.get(p)==Status::UnKnown)
     {
         slice_matrix.set(p, Status::Flagged);
-        add(&ps->first, p);
+        add(&std::get<0>(*ps), p);
         findGroup(ps, m, Pos(p.row, p.col-1));
         findGroup(ps, m, Pos(p.row, p.col+1));
         findGroup(ps, m, Pos(p.row-1, p.col));

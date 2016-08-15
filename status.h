@@ -3,7 +3,7 @@
 
 enum class Status
 {
-    Blank   = ' ',
+    Blank   = '0',
     Flagged = '#',
     UnKnown = '?',
     Number1 = '1',
@@ -14,6 +14,13 @@ enum class Status
     Number6 = '6',
     Number7 = '7',
     Number8 = '8',
+};
+
+enum class MineLevel
+{
+    Small,
+    Medium,
+    Large,
 };
 
 #endif // STATUS_H

@@ -2,13 +2,6 @@
 #define BOARD_H
 #include "matrix.h"
 
-enum class MineLevel
-{
-    Small,
-    Medium,
-    Large,
-};
-
 class Board
 {
 //    friend class DoubleClickSolver;
