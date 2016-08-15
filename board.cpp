@@ -90,7 +90,7 @@ bool Board::clickPos(Pos p)
     return true;
 }
 
-bool Board::doubleClick(Pos p)
+bool Board::doubleClick(Pos p, bool *isCleardPos)
 {
     Status s = getPos_u(p);
     switch(s)
@@ -111,17 +111,25 @@ bool Board::doubleClick(Pos p)
     case Status::Number8:
     {
         PosInfo info(p, *this);
-        cout << info.mine_num << ":"<<info.flagged_num<<":"<<info.unknow_num<<endl;
-        if (info.mine_num == info.flagged_num)
+        if (info.unknow_num == 0)
+        {
+            //如果周围没有unknow块，快速返回
+            *isCleardPos = true;
+            return true;
+        }
+        else if (info.mine_num == info.flagged_num)
         {
             //如果标记完毕还有 unknow num 那么就有可能引爆
             //mine num == flagged num
-            return info.openBlank();
+            bool b = info.openBlank();
+            if (b) *isCleardPos = true;
+            return b;
         }
         else if (info.mine_num == info.flagged_num + info.unknow_num)
         {
             //mine num > flagged num
             info.flagAll();
+            *isCleardPos = true;
             return true;
         }
         else
@@ -170,5 +178,5 @@ bool Board::isDone() const
         if (s==Status::Flagged || s==Status::UnKnown)
             ++unOpenedNum;
     }
-    return unOpenedNum <= mine_num+1;
+    return unOpenedNum <= mine_num;
 }

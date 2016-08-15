@@ -28,7 +28,7 @@ public:
     void flagPos(Pos p);
     void unflagPos(Pos p);
     bool clickPos(Pos p);
-    bool doubleClick(Pos p);
+    bool doubleClick(Pos p, bool *isCleardPos);
 public:
     // some get interface
     int MineNum() const { return mine_num; }

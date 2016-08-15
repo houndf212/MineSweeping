@@ -8,9 +8,14 @@ public:
     explicit DoubleClickSolver(const Board& b);
     bool solve();
 private:
-    static int rand(int n);
+    void doubleClickAll();
+    void doubleClickNum(Status s);
 private:
     Board board;
+    MatrixInfo matinfo;
+    PosSet clearSet;
+private:
+    static int rand(int n);
 };
 
 #endif // DOUBLECLICKSOLVER_H

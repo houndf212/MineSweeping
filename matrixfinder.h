@@ -7,6 +7,7 @@ class MatrixFinder
 public:
     //找到一块空白的区域
     static bool findBlankArea(const Matrix& m, Pos* p);
+private:
     static bool checkAroundIsBlank(const Matrix& m, Pos p);
 };
 

@@ -4,6 +4,22 @@
 MatrixInfo Matrix::toPosSetMap() const
 {
     MatrixInfo ret;
+
+    //先初始化所有为空集合
+    ret[Status::Blank];
+    ret[Status::Flagged];
+    ret[Status::UnKnown];
+    ret[Status::Number1];
+    ret[Status::Number2];
+    ret[Status::Number3];
+    ret[Status::Number4];
+    ret[Status::Number5];
+    ret[Status::Number6];
+    ret[Status::Number7];
+    ret[Status::Number8];
+
+    int size = ret[Status::Blank].size();
+
     for (MatrixCIter it=begin(), last=end();it!=last; ++it)
     {
         ret[*it].insert(it.toPos());
@@ -74,3 +90,30 @@ bool Matrix::equal(const Matrix &m1, const Matrix &m2)
 }
 
 
+
+bool MatrixInfo_Equal(const MatrixInfo &matinfo1, const MatrixInfo &matinfo2)
+{
+    //因为 matrixinfo 都是来自同一个board 所以，只需要比较每个PosSet的大小即可
+
+//    return
+//            matinfo1.at(Status::Blank).size() == matinfo2.at(Status::Blank).size() &&
+//            matinfo1.at(Status::UnKnown).size() == matinfo2.at(Status::UnKnown).size() &&
+//            matinfo1.at(Status::Flagged).size() == matinfo2.at(Status::Flagged).size() &&
+//            matinfo1.at(Status::Number1).size() == matinfo2.at(Status::Number1).size() &&
+//            matinfo1.at(Status::Number2).size() == matinfo2.at(Status::Number2).size() &&
+//            matinfo1.at(Status::Number3).size() == matinfo2.at(Status::Number3).size() &&
+//            matinfo1.at(Status::Number4).size() == matinfo2.at(Status::Number4).size() &&
+//            matinfo1.at(Status::Number5).size() == matinfo2.at(Status::Number5).size() &&
+//            matinfo1.at(Status::Number6).size() == matinfo2.at(Status::Number6).size() &&
+//            matinfo1.at(Status::Number7).size() == matinfo2.at(Status::Number7).size() &&
+//            matinfo1.at(Status::Number8).size() == matinfo2.at(Status::Number8).size() ;
+
+    for (MatrixInfo::const_iterator it=matinfo1.cbegin(), last=matinfo1.cend();
+         it!=last;
+         ++it)
+    {
+        if (it->second.size()!=matinfo2.at(it->first).size())
+            return false;
+    }
+    return true;
+}

@@ -10,6 +10,7 @@ using std::vector;
 using std::map;
 
 typedef map<Status, PosSet> MatrixInfo;
+bool MatrixInfo_Equal(const MatrixInfo &matinfo1, const MatrixInfo &matinfo2);
 
 class Matrix
 {
