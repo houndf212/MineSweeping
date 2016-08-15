@@ -7,13 +7,15 @@
 #include "board.h"
 #include "humanplayer.h"
 #include "matrixfinder.h"
-#include "boardprinter.h"
 #include "doubleclicksolver.h"
 
 using namespace std;
 
 void testDoubleSolve(int n)
 {
+    time_t tm;
+    time(&tm);
+    cout<<ctime(&tm)<<endl;
     int sum=0;
     int k=0;
     while (k++<n)
@@ -24,16 +26,19 @@ void testDoubleSolve(int n)
         if (s.solve())
             ++sum;
     }
+    time(&tm);
+    cout<<ctime(&tm)<<endl;
     cout<< "solved: "<< sum<<",  "<<double(sum)/n<<endl;
 }
 int main()
 {
     std::srand(time(0));
-//    Board b;
-//    b.reset(MineLevel::Small);
+    Board b;
+//    b.reset(20, 20, 200);
+    b.reset(MineLevel::Small);
 
-//    HumanPlayer::play(b);
-    testDoubleSolve(10000);
+    HumanPlayer::play(b);
+//    testDoubleSolve(10000);
 
 //    system("pause");
     return 0;

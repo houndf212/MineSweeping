@@ -29,6 +29,7 @@ void Board::reset(MineLevel l)
 
 void Board::reset(int row, int col, int n)
 {
+    assert(n<row*col);
     mine_num = n;
     flagged_num = 0;
     real_matrix.resize(row, col, Status::Blank);
@@ -98,7 +99,6 @@ bool Board::doubleClick(Pos p, bool *isCleardPos)
     case Status::Blank:
     case Status::UnKnown:
     case Status::Flagged:
-//    case Status::Mine:
         return true;
         break;
     case Status::Number1:
@@ -172,9 +172,10 @@ void Board::checkBound(Pos p) const
 bool Board::isDone() const
 {
     int unOpenedNum = 0;
-    for (MatrixCIter it=user_matrix.begin(), end=user_matrix.end(); it!=end; ++it)
+//    for (MatrixCIter it=user_matrix.begin(), end=user_matrix.end(); it!=end; ++it)
+    for (const Status& s : user_matrix)
     {
-        Status s = *it;
+//        Status s = *it;
         if (s==Status::Flagged || s==Status::UnKnown)
             ++unOpenedNum;
     }

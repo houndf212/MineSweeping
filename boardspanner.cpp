@@ -48,7 +48,6 @@ void BoardSpanner::open(Board &b, Pos p)
         open(b, Pos(p.row+1, p.col));
         open(b, Pos(p.row+1, p.col+1));
         break;
-//    case Status::Mine:
     case Status::Flagged:
     default:
         assert(false);

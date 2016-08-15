@@ -1,5 +1,8 @@
 ﻿#include "matrix.h"
-#include <cassert>
+#include <iostream>
+#include <iomanip>
+using std::cout;
+using std::endl;
 
 MatrixInfo Matrix::toPosSetMap() const
 {
@@ -18,11 +21,9 @@ MatrixInfo Matrix::toPosSetMap() const
     ret[Status::Number7];
     ret[Status::Number8];
 
-    int size = ret[Status::Blank].size();
-
     for (MatrixCIter it=begin(), last=end();it!=last; ++it)
     {
-        ret[*it].insert(it.toPos());
+        add(&ret[*it], it.toPos());
     }
     return ret;
 }
@@ -89,31 +90,44 @@ bool Matrix::equal(const Matrix &m1, const Matrix &m2)
     return true;
 }
 
-
-
 bool MatrixInfo_Equal(const MatrixInfo &matinfo1, const MatrixInfo &matinfo2)
 {
     //因为 matrixinfo 都是来自同一个board 所以，只需要比较每个PosSet的大小即可
-
-//    return
-//            matinfo1.at(Status::Blank).size() == matinfo2.at(Status::Blank).size() &&
-//            matinfo1.at(Status::UnKnown).size() == matinfo2.at(Status::UnKnown).size() &&
-//            matinfo1.at(Status::Flagged).size() == matinfo2.at(Status::Flagged).size() &&
-//            matinfo1.at(Status::Number1).size() == matinfo2.at(Status::Number1).size() &&
-//            matinfo1.at(Status::Number2).size() == matinfo2.at(Status::Number2).size() &&
-//            matinfo1.at(Status::Number3).size() == matinfo2.at(Status::Number3).size() &&
-//            matinfo1.at(Status::Number4).size() == matinfo2.at(Status::Number4).size() &&
-//            matinfo1.at(Status::Number5).size() == matinfo2.at(Status::Number5).size() &&
-//            matinfo1.at(Status::Number6).size() == matinfo2.at(Status::Number6).size() &&
-//            matinfo1.at(Status::Number7).size() == matinfo2.at(Status::Number7).size() &&
-//            matinfo1.at(Status::Number8).size() == matinfo2.at(Status::Number8).size() ;
-
-    for (MatrixInfo::const_iterator it=matinfo1.cbegin(), last=matinfo1.cend();
-         it!=last;
-         ++it)
+    for (const MatrixInfo::value_type& p : matinfo1)
     {
-        if (it->second.size()!=matinfo2.at(it->first).size())
+        if (p.second.size() != matinfo2.at(p.first).size())
             return false;
     }
     return true;
+}
+
+std::ostream &operator<<(std::ostream &os, const Matrix &m)
+{
+    os<<"   ";
+    for (int col=0; col<m.col_size(); ++col)
+    {
+        os<<std::setw(2)<<col;
+    }
+    os<<endl;
+    for (int col=0; col<m.col_size()+2; ++col)
+    {
+        os<<std::setw(2)<<"--";
+    }
+    os<<endl;
+    for (int row=0; row<m.row_size(); ++row)
+    {
+        os<<std::setw(2)<<row;
+        os<<'|';
+        for (int col=0; col<m.col_size(); ++col)
+        {
+            os<<std::setw(2)<<char(m.get(Pos(row, col)));
+        }
+        os<<endl;
+    }
+    for (int col=0; col<m.col_size()+2; ++col)
+    {
+        os<<std::setw(2)<<"--";
+    }
+    os<<endl;
+    return os;
 }

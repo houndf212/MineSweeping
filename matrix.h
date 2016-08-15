@@ -44,4 +44,6 @@ public:
     static bool equal(const Matrix& m1, const Matrix& m2);
 };
 
+std::ostream& operator<<(std::ostream& os, const Matrix& m);
+
 #endif // MATRIX_H

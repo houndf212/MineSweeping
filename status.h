@@ -3,8 +3,8 @@
 
 enum class Status
 {
-    Blank   = '#',
-    Flagged = 'F',
+    Blank   = ' ',
+    Flagged = '#',
     UnKnown = '?',
     Number1 = '1',
     Number2 = '2',

@@ -15,10 +15,8 @@ void BoardGen::Gen(Matrix *m, int n)
 
 void BoardGen::cleanRealMatrix(Matrix *m)
 {
-    for (MatrixIter it=m->begin(), end=m->end(); it!=end; ++it)
-    {
-        *it = Status::Blank;
-    }
+    for (Status& s : *m)
+        s = Status::Blank;
 }
 
 vector<int> BoardGen::randRang(int s, int n)

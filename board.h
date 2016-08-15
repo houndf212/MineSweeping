@@ -11,18 +11,19 @@ enum class MineLevel
 
 class Board
 {
-    friend class DoubleClickSolver;
+//    friend class DoubleClickSolver;
     friend int main();
     friend class PosInfo;
     friend class BoardGen;
     friend class BoardSpanner;
-    friend class BoardPrinter;
 public:
     Board();
     void reset(MineLevel l);
     void reset(int row, int col, int n);
     bool isInBoard(Pos p) const { return real_matrix.isInMatrix(p); }
     bool isDone() const;
+    const Matrix& getViewMatrix() const { return user_matrix; }
+    const Matrix& getRealMatrix() const { return real_matrix; }
 public:
     //user interface, return false, game over
     void flagPos(Pos p);

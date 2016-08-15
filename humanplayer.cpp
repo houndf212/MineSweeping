@@ -1,14 +1,25 @@
 ﻿#include "humanplayer.h"
-#include "boardprinter.h"
 #include <iostream>
 using namespace std;
 
+#include "slicer.h"
+
 bool HumanPlayer::play(Board &b)
 {
-    BoardPrinter::print_r(b);
-    BoardPrinter::print_u(b);
     bool a = true;
-    do{
+    while (a)
+    {
+        cout<<b.getRealMatrix();
+        cout<<b.getViewMatrix();
+        cout<<"left mine: "<<b.MineNum() - b.FlaggedNum()<<endl;
+        MatrixInfo mmap = b.getViewMatrix().toPosSetMap();
+        for (MatrixInfo::value_type& p : mmap)
+        {
+            cout<<char(p.first)<<":"<<p.second.size()<<endl;
+        }
+        Slicer sl(b.getViewMatrix());
+        cout<< "unknow group size: "<<sl.group.size()<<endl;
+
         if (b.isDone())
         {
             break;
@@ -52,11 +63,8 @@ bool HumanPlayer::play(Board &b)
         }
             break;
         }
-
-        BoardPrinter::print_r(b);
-        BoardPrinter::print_u(b);
     }
-    while (a);
+
 
     if (a)
     {

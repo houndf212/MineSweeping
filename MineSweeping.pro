@@ -6,7 +6,6 @@ CONFIG -= qt
 SOURCES += main.cpp \
     board.cpp \
     pos.cpp \
-    boardprinter.cpp \
     boardgen.cpp \
     boardspanner.cpp \
     matrixfinder.cpp \
@@ -14,12 +13,12 @@ SOURCES += main.cpp \
     humanplayer.cpp \
     matrixiter.cpp \
     doubleclicksolver.cpp \
-    matrix.cpp
+    matrix.cpp \
+    slicer.cpp
 
 HEADERS += \
     board.h \
     pos.h \
-    boardprinter.h \
     boardgen.h \
     boardspanner.h \
     matrixfinder.h \
@@ -28,5 +27,6 @@ HEADERS += \
     matrixiter.h \
     doubleclicksolver.h \
     matrix.h \
-    status.h
+    status.h \
+    slicer.h
 

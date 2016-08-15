@@ -9,19 +9,19 @@
 DoubleClickSolver::DoubleClickSolver(const Board &b)
     :board(b)
 {
-    matinfo = b.user_matrix.toPosSetMap();
+    matinfo = b.getViewMatrix().toPosSetMap();
 }
 
 bool DoubleClickSolver::solve()
 {
     //第一步 作弊，点击空白处
     Pos p(0, 0);
-    bool hasBlank = MatrixFinder::findBlankArea(board.real_matrix, &p);
+    bool hasBlank = MatrixFinder::findBlankArea(board.getRealMatrix(), &p);
     if (hasBlank)
     {
         bool tb = board.clickPos(p);
         assert(tb);
-        matinfo = board.user_matrix.toPosSetMap();
+        matinfo = board.getViewMatrix().toPosSetMap();
     }
     else
     {
@@ -34,7 +34,7 @@ bool DoubleClickSolver::solve()
     while (!board.isDone())
     {
         doubleClickAll();
-        MatrixInfo newinfo = board.user_matrix.toPosSetMap();
+        MatrixInfo newinfo = board.getViewMatrix().toPosSetMap();
         if ( MatrixInfo_Equal(newinfo, matinfo))
         {
 //            cout<<"double click cannot solve the board!"<<endl;
@@ -54,6 +54,7 @@ bool DoubleClickSolver::solve()
 
 void DoubleClickSolver::doubleClickAll()
 {
+    clearSet.clear();
     //对所有是数字的位置执行双击操作
     doubleClickNum(Status::Number1);
     doubleClickNum(Status::Number2);
@@ -67,21 +68,15 @@ void DoubleClickSolver::doubleClickAll()
 
 void DoubleClickSolver::doubleClickNum(Status s)
 {
-//    const PosSet& ps = matinfo[s];
-//    for (PosSet::const_iterator it=ps.cbegin(), last=ps.cend();
-//         it!=last;
-//         ++it)
-//    {
-//        board.clickPos(*it);
-//    }
-
     // the c++ 11 for loop
     for (Pos p : matinfo[s])
     {
         bool b=false;
         board.doubleClick(p, &b);
         if (b)
-            clearSet.insert(p);
+        {
+            add(&clearSet, p);
+        }
     }
 }
 
