@@ -1,6 +1,6 @@
 ﻿#ifndef POSINFO_H
 #define POSINFO_H
-#include "matrix.h"
+
 #include "board.h"
 
 class PosInfo
@@ -16,7 +16,9 @@ public:
     const Pos pos;
     int mine_num;
     int unknow_num;
+    PosSet unknow_set;
     int flagged_num;
+    PosSet flagged_set;
 private:
     void getNum(Pos p);
     bool clickPos(Pos p) const;

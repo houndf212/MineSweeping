@@ -14,7 +14,9 @@ SOURCES += main.cpp \
     matrixiter.cpp \
     doubleclicksolver.cpp \
     matrix.cpp \
-    slicer.cpp
+    slicer.cpp \
+    grouptester.cpp \
+    group.cpp
 
 HEADERS += \
     board.h \
@@ -28,5 +30,7 @@ HEADERS += \
     doubleclicksolver.h \
     matrix.h \
     status.h \
-    slicer.h
+    slicer.h \
+    grouptester.h \
+    group.h
 

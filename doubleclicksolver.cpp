@@ -1,12 +1,12 @@
 ﻿#include "doubleclicksolver.h"
 #include <stdlib.h>
-//#include <iostream>
+#include <iostream>
 #include "matrixfinder.h"
-//#include "boardprinter.h"
+#include "slicer.h"
 
-//using namespace std;
+using namespace std;
 
-DoubleClickSolver::DoubleClickSolver(const Board &b)
+DoubleClickSolver::DoubleClickSolver(Board &b)
     :board(b)
 {
     matinfo = b.getViewMatrix().toPosSetMap();
@@ -14,20 +14,21 @@ DoubleClickSolver::DoubleClickSolver(const Board &b)
 
 bool DoubleClickSolver::solve()
 {
+    cout<<__FUNCTION__<<endl;
     //第一步 作弊，点击空白处
-    Pos p(0, 0);
-    bool hasBlank = MatrixFinder::findBlankArea(board.getRealMatrix(), &p);
-    if (hasBlank)
-    {
-        bool tb = board.clickPos(p);
-        assert(tb);
-        matinfo = board.getViewMatrix().toPosSetMap();
-    }
-    else
-    {
-//        cout<<"I cannnot solve a game without any blank!"<<endl;
-        return false;
-    }
+//    Pos p(0, 0);
+//    bool hasBlank = MatrixFinder::findBlankArea(board.getRealMatrix(), &p);
+//    if (hasBlank)
+//    {
+//        bool tb = board.clickPos(p);
+//        assert(tb);
+//        matinfo = board.getViewMatrix().toPosSetMap();
+//    }
+//    else
+//    {
+////        cout<<"I cannnot solve a game without any blank!"<<endl;
+//        return false;
+//    }
 
     //循环重复双击点击所有数字，直到user matrix 不再变化
 
@@ -64,6 +65,24 @@ void DoubleClickSolver::doubleClickAll()
     doubleClickNum(Status::Number6);
     doubleClickNum(Status::Number7);
     doubleClickNum(Status::Number8);
+
+    // use slicer way
+//    Slicer s(board.getViewMatrix());
+//    std::set<Pos> all_border;
+//    for (const Group& g : s.groups)
+//    {
+//        all_border.insert(g.outer_border.cbegin(), g.outer_border.cend());
+//    }
+
+//    for (const Pos& p : all_border)
+//    {
+//        bool b=false;
+//        board.doubleClick(p, &b);
+//        if (b)
+//        {
+//            add(&clearSet, p);
+//        }
+//    }
 }
 
 void DoubleClickSolver::doubleClickNum(Status s)
@@ -80,10 +99,6 @@ void DoubleClickSolver::doubleClickNum(Status s)
     }
 }
 
-//bool DoubleClickSolver::solve()
-//{
-
-//}
 
 int DoubleClickSolver::rand(int n)
 {

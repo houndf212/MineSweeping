@@ -21,7 +21,7 @@ void testDoubleSolve(int n)
     while (k++<n)
     {
         Board b;
-        b.reset(MineLevel::Small);
+        b.reset(MineLevel::Medium);
         DoubleClickSolver s(b);
         if (s.solve())
             ++sum;
@@ -35,7 +35,7 @@ int main()
     std::srand(time(0));
     Board b;
 //    b.reset(20, 20, 200);
-    b.reset(MineLevel::Small);
+    b.reset(MineLevel::Medium);
 
     HumanPlayer::play(b);
 //    testDoubleSolve(10000);

@@ -5,13 +5,14 @@
 class DoubleClickSolver
 {
 public:
-    explicit DoubleClickSolver(const Board& b);
+    explicit DoubleClickSolver(Board& b);
     bool solve();
 private:
     void doubleClickAll();
     void doubleClickNum(Status s);
+
 private:
-    Board board;
+    Board& board;
     MatrixInfo matinfo;
     PosSet clearSet;
 private:

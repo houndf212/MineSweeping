@@ -56,9 +56,15 @@ void PosInfo::getNum(Pos p)
     if (board.isInBoard(p))
     {
         if (board.getPos_u(p)==Status::UnKnown)
+        {
             ++unknow_num;
-        else if (board.getPos_u(p)== Status::Flagged)
+            add(&unknow_set, p);
+        }
+        else if (board.getPos_u(p)==Status::Flagged)
+        {
             ++flagged_num;
+            add(&flagged_set, p);
+        }
     }
 }
 

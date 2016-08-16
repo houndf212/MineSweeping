@@ -3,20 +3,27 @@
 using namespace std;
 
 #include "slicer.h"
+#include "doubleclicksolver.h"
 
 bool HumanPlayer::play(Board &b)
 {
     bool a = true;
     while (a)
     {
+        DoubleClickSolver solver(b);
+        solver.solve();
+
+        if (b.isDone())
+            break;
+
         cout<<b.getRealMatrix();
         cout<<b.getViewMatrix();
         cout<<"left mine: "<<b.MineNum() - b.FlaggedNum()<<endl;
-        MatrixInfo mmap = b.getViewMatrix().toPosSetMap();
-        for (MatrixInfo::value_type& p : mmap)
-        {
-            cout<<char(p.first)<<":"<<p.second.size()<<endl;
-        }
+//        MatrixInfo mmap = b.getViewMatrix().toPosSetMap();
+//        for (MatrixInfo::value_type& p : mmap)
+//        {
+//            cout<<char(p.first)<<":"<<p.second.size()<<endl;
+//        }
         Slicer sl(b.getViewMatrix());
         for (const Group& t : sl.groups)
         {
@@ -26,10 +33,6 @@ bool HumanPlayer::play(Board &b)
             cout<<t.outer_border.size()<<endl;
         }
 
-        if (b.isDone())
-        {
-            break;
-        }
         char c;
         while (true)
         {
@@ -69,6 +72,8 @@ bool HumanPlayer::play(Board &b)
         }
             break;
         }
+
+
     }
 
 
