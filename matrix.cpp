@@ -23,7 +23,7 @@ MatrixInfo Matrix::toPosSetMap() const
 
     for (MatrixCIter it=begin(), last=end();it!=last; ++it)
     {
-        add(&ret[*it], it.toPos());
+        ret[*it].insert(it.toPos());
     }
     return ret;
 }

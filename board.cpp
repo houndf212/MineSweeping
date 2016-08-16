@@ -121,14 +121,14 @@ bool Board::doubleClick(Pos p, bool *isCleardPos)
         {
             //如果标记完毕还有 unknow num 那么就有可能引爆
             //mine num == flagged num
-            bool b = info.openBlank();
+            bool b = info.openBlank(this);
             if (b) *isCleardPos = true;
             return b;
         }
         else if (info.mine_num == info.flagged_num + info.unknow_num)
         {
             //mine num > flagged num
-            info.flagAll();
+            info.flagAll(this);
             *isCleardPos = true;
             return true;
         }

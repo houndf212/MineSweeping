@@ -26,7 +26,7 @@ void Slicer::findGroup(Group *ps, const Matrix &m, Pos p)
         m.get(p)==Status::UnKnown)
     {
         slice_matrix.set(p, Status::Flagged);
-        add(&ps->all_unknow, p);
+        ps->all_unknow.insert(p);
         getBorder(ps, m, p);
 
         findGroup(ps, m, Pos(p.row, p.col-1));
@@ -51,7 +51,7 @@ void Slicer::getBorder(Group *ps, const Matrix &m, Pos p)
 
     if (!tempset.empty())
     {
-        add(&ps->innter_border, p);
+        ps->innter_border.insert(p);
         ps->outer_border.insert(tempset.cbegin(), tempset.cend());
     }
 
@@ -61,7 +61,7 @@ void Slicer::checkInnerBorder(PosSet *ps, const Matrix &m, Pos cp)
 {
     if (m.isInMatrix(cp) && m.get(cp)!=Status::UnKnown)
     {
-        add(ps, cp);
+        ps->insert(cp);
     }
 }
 

@@ -41,22 +41,8 @@ struct less<Pos>
 };
 }
 
-//#define USE_STD_SET
-#ifdef USE_STD_SET
-typedef std::set<Pos> PosSet;
-#else
-typedef std::vector<Pos> PosSet;
-//typedef std::list<Pos> PosSet;
-#endif
 
-inline void add(PosSet* s, Pos p)
-{
-#ifdef USE_STD_SET
-    s->insert(p);
-#else
-    s->push_back(p);
-#endif
-}
+typedef std::set<Pos> PosSet;
 
 
 #endif // POS_H

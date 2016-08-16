@@ -94,7 +94,7 @@ void DoubleClickSolver::doubleClickNum(Status s)
         board.doubleClick(p, &b);
         if (b)
         {
-            add(&clearSet, p);
+            clearSet.insert(p);
         }
     }
 }

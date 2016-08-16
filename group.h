@@ -7,7 +7,7 @@ class Group
 public:
     PosSet all_unknow;
     PosSet innter_border;
-    std::set<Pos> outer_border;
+    PosSet outer_border;
 };
 
 #endif // GROUP_H
