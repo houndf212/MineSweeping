@@ -18,12 +18,12 @@ bool HumanPlayer::play(Board &b)
             cout<<char(p.first)<<":"<<p.second.size()<<endl;
         }
         Slicer sl(b.getViewMatrix());
-        for (const auto& t : sl.group)
+        for (const Group& t : sl.groups)
         {
             cout<<"##"<<endl;
-            cout<<std::get<0>(t).size()<<endl;
-            cout<<std::get<1>(t).size()<<endl;
-            cout<<std::get<2>(t).size()<<endl;
+            cout<<t.all_unknow.size()<<endl;
+            cout<<t.innter_border.size()<<endl;
+            cout<<t.outer_border.size()<<endl;
         }
 
         if (b.isDone())
