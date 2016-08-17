@@ -7,19 +7,23 @@
 class GroupTester
 {
 public:
-    GroupTester(Board& b, const Group& g);
-
+    GroupTester(const Matrix& m, int n, const Group& g);
+    bool isGood( Pos *p) const;
 private:
+
     bool testCanTest() const;
     bool isOutBorderAllMine() const;
-    bool findOneInTwo(Pos *ret) const;
+    bool findOneInTwo(PosInfo *ret) const;
     bool isInInnerBorder(const PosSet& s) const;
-    bool test(PosInfo info) const;
-    bool testFlagPos(Pos p, PosSet s, Board b) const;
+    bool test(PosInfo info, Pos *ret) const;
+    bool testMineNum() const;
 
-    Board board;
-    const Matrix& view;
-    const Group& group;
+private:
+    bool handleClearInfo();
+    const int mine_num;
+    Matrix view;
+    Group group;
+    bool isWrong;
 };
 
 #endif // GROUPTESTER_H

@@ -10,6 +10,7 @@ class Pos
 public:
     int row;
     int col;
+    Pos() {}
     Pos(int r, int c);
     static bool less(const Pos& p1, const Pos& p2);
     static bool equal(const Pos& p1, const Pos& p2);

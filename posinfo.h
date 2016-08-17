@@ -6,20 +6,21 @@
 class PosInfo
 {
 public:
-    PosInfo(Pos p, const Board& board);
+    PosInfo() {}
+    PosInfo(Pos p, const Matrix& m);
 
     // the below func will change the board!
     void flagAll( Board* board) const;
     bool openBlank( Board* board) const;
 public:
-    const Pos pos;
+    Pos pos;
     int mine_num;
     int unknow_num;
     PosSet unknow_set;
     int flagged_num;
     PosSet flagged_set;
 private:
-    void getNum(Pos p, const Board& board);
+    void getNum(Pos p, const Matrix& m);
     bool clickPos(Pos p, Board* board) const;
     void flagPos(Pos p, Board* board) const;
 };

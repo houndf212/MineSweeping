@@ -4,6 +4,7 @@ using namespace std;
 
 #include "slicer.h"
 #include "doubleclicksolver.h"
+#include "grouptester.h"
 
 bool HumanPlayer::play(Board &b)
 {
@@ -31,7 +32,14 @@ bool HumanPlayer::play(Board &b)
             cout<<t.all_unknow.size()<<endl;
             cout<<t.innter_border.size()<<endl;
             cout<<t.outer_border.size()<<endl;
+            GroupTester test(b.getViewMatrix(),b.OriginMineNum(), t);
+            Pos p(b.RowSize(), b.ColSize());
+            Pos p1(p);
+            cout<<"is good: "<<test.isGood(&p)<<endl;
+            if (!Pos::equal(p, p1))
+                cout<<p<<" is mine!"<<endl;
         }
+
 
         char c;
         while (true)

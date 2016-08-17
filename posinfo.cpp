@@ -1,23 +1,25 @@
 ﻿#include "posinfo.h"
+#include <iostream>
 
-PosInfo::PosInfo(Pos p, const Board &board)
+PosInfo::PosInfo(Pos p, const Matrix &m)
     :
     pos(p)
     ,mine_num(0)
     ,unknow_num(0)
     ,flagged_num(0)
 {
-    mine_num = int(board.getPos_u(p)) - '0';
+//    std::cout<< p<<":"<<char(m.get(p));
+    mine_num = int(m.get(p)) - '0';
     assert(1<=mine_num && mine_num<=8);
 
-    getNum(Pos(p.row-1, p.col-1), board);
-    getNum(Pos(p.row-1, p.col), board);
-    getNum(Pos(p.row-1, p.col+1), board);
-    getNum(Pos(p.row, p.col-1), board);
-    getNum(Pos(p.row, p.col+1), board);
-    getNum(Pos(p.row+1, p.col-1), board);
-    getNum(Pos(p.row+1, p.col), board);
-    getNum(Pos(p.row+1, p.col+1), board);
+    getNum(Pos(p.row-1, p.col-1), m);
+    getNum(Pos(p.row-1, p.col), m);
+    getNum(Pos(p.row-1, p.col+1), m);
+    getNum(Pos(p.row, p.col-1), m);
+    getNum(Pos(p.row, p.col+1), m);
+    getNum(Pos(p.row+1, p.col-1), m);
+    getNum(Pos(p.row+1, p.col), m);
+    getNum(Pos(p.row+1, p.col+1), m);
 
 }
 
@@ -51,16 +53,16 @@ bool PosInfo::openBlank(Board *board) const
     && clickPos(Pos(pos.row+1, pos.col+1), board);
 }
 
-void PosInfo::getNum(Pos p, const Board &board)
+void PosInfo::getNum(Pos p, const Matrix &m)
 {
-    if (board.isInBoard(p))
+    if (m.isInMatrix(p))
     {
-        if (board.getPos_u(p)==Status::UnKnown)
+        if (m.get(p)==Status::UnKnown)
         {
             ++unknow_num;
             unknow_set.insert(p);
         }
-        else if (board.getPos_u(p)==Status::Flagged)
+        else if (m.get(p)==Status::Flagged)
         {
             ++flagged_num;
             flagged_set.insert(p);

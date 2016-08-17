@@ -8,6 +8,7 @@
 #include "humanplayer.h"
 #include "matrixfinder.h"
 #include "doubleclicksolver.h"
+#include "boardgen.h"
 
 using namespace std;
 
@@ -34,8 +35,22 @@ int main()
 {
     std::srand(time(0));
     Board b;
-//    b.reset(20, 20, 200);
-    b.reset(MineLevel::Medium);
+
+    b.reset(MineLevel::Large);
+
+//    b.reset(4, 4, 3);
+//    BoardGen::cleanRealMatrix(&b.real_matrix);
+//    std::vector<MatrixIter> vec;
+//    vec.push_back(MatrixIter(&b.real_matrix, 1*b.ColSize()+2));
+//    vec.push_back(MatrixIter(&b.real_matrix, 2*b.ColSize()+1));
+//    vec.push_back(MatrixIter(&b.real_matrix, 2*b.ColSize()+3));
+
+//    for (const MatrixIter& it : vec)
+//    {
+//        b.real_matrix.set(it.toPos(), Status::Flagged);
+//    }
+
+//    BoardGen::calNum(&b.real_matrix, vec);
 
     HumanPlayer::play(b);
 //    testDoubleSolve(10000);

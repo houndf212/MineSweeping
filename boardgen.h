@@ -6,7 +6,7 @@ class BoardGen
 {
 public:
     static void Gen(Matrix* m, int n);
-private:
+//private:
     static void cleanRealMatrix(Matrix *m);
     static vector<int> randRang(int s, int n);
     static vector<MatrixIter> randPos(Matrix* m, int n);

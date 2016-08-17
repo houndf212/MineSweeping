@@ -6,7 +6,8 @@ Slicer::Slicer(const Matrix &m)
     //第一步 所有赋值为 没检查过
     slice_matrix.resize(m.row_size(), m.col_size(), Status::UnKnown);
 
-    for (MatrixIter it=slice_matrix.begin(), end=slice_matrix.end();
+    for (MatrixIter it=slice_matrix.begin(),
+         end=slice_matrix.end();
          it!=end;
          ++it)
     {
@@ -14,9 +15,9 @@ Slicer::Slicer(const Matrix &m)
         {
             groups.push_back(Group());
             findGroup(&groups.back(), m, it.toPos());
-
         }
     }
+
 }
 
 void Slicer::findGroup(Group *ps, const Matrix &m, Pos p)

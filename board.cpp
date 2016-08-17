@@ -30,6 +30,7 @@ void Board::reset(MineLevel l)
 void Board::reset(int row, int col, int n)
 {
     assert(n<row*col);
+    origin_mine_num = n;
     mine_num = n;
     flagged_num = 0;
     real_matrix.resize(row, col, Status::Blank);
@@ -110,7 +111,7 @@ bool Board::doubleClick(Pos p, bool *isCleardPos)
     case Status::Number7:
     case Status::Number8:
     {
-        PosInfo info(p, *this);
+        PosInfo info(p, this->user_matrix);
         if (info.unknow_num == 0)
         {
             //如果周围没有unknow块，快速返回
