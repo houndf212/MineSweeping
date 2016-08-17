@@ -54,22 +54,24 @@ bool GroupTester::findOneInTwo(PosInfo *ret) const
 {
     for (const Pos& p : group.outer_border)
     {
-        if (view.get(p)!=Status::Flagged)
+        assert (view.get(p)!=Status::Flagged);
+
+        PosInfo info(p, view);
+        //边界点周围的位置点不可能是1，不然这个1 就是mine
+        //            assert(info.unknow_set.size()>1);
+        if (info.unknow_set.size()<=1)
         {
-            PosInfo info(p, view);
-            //边界点周围的位置点不可能是1，不然这个1 就是mine
-//            assert(info.unknow_set.size()>1);
-            if (info.unknow_set.size()<=1)
-            {
-                cout<<view;
-                cout<<"\nassert: "<<p<<endl;
-            }
-            if (info.unknow_set.size()==2 && isInInnerBorder(info.unknow_set))
-            {
-                *ret = info;
-                return true;
-            }
+            cout<<view;
+            cout<<info.mine_num<<":"<<info.flagged_num<<":"<<info.unknow_num<<endl;
+            cout<<"\nassert: "<<p<<endl;
+            assert(false);
         }
+        if (info.unknow_set.size()==2 && isInInnerBorder(info.unknow_set))
+        {
+            *ret = info;
+            return true;
+        }
+
     }
     return false;
 }

@@ -45,5 +45,7 @@ struct less<Pos>
 
 typedef std::set<Pos> PosSet;
 
+std::ostream &operator<<(std::ostream& os, const PosSet& s);
+
 
 #endif // POS_H

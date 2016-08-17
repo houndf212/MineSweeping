@@ -10,4 +10,7 @@ public:
     PosSet outer_border;
 };
 
+std::ostream &operator<<(std::ostream& os, const Group& g);
+
+
 #endif // GROUP_H

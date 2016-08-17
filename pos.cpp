@@ -24,3 +24,14 @@ std::istream &operator>>(std::istream &is, Pos &p)
 {
     return is >> p.row >> p.col;
 }
+
+std::ostream &operator<<(std::ostream &os, const PosSet &s)
+{
+    os<<"[";
+    for (const Pos& p : s)
+    {
+        os<<p<<",";
+    }
+    os<<"]"<<std::endl;
+    return os;
+}

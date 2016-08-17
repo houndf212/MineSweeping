@@ -28,7 +28,6 @@ public:
 //    void fakeSetBlank(Pos p) { setPos_u(p, Status::Blank); }
 public:
     // some get interface
-    int OriginMineNum() const { return origin_mine_num; }
     int MineNum() const { return mine_num; }
     int FlaggedNum() const { return flagged_num; }
     int RowSize() const { return real_matrix.row_size(); }
@@ -44,7 +43,6 @@ private:
 private:
     Matrix real_matrix;
     Matrix user_matrix;
-    int origin_mine_num;
     int mine_num;
     int flagged_num;
 };

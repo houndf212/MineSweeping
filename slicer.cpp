@@ -53,14 +53,21 @@ void Slicer::getBorder(Group *ps, const Matrix &m, Pos p)
     if (!tempset.empty())
     {
         ps->innter_border.insert(p);
-        ps->outer_border.insert(tempset.cbegin(), tempset.cend());
+//        ps->outer_border.insert(tempset.cbegin(), tempset.cend());
+        for (const Pos& tp : tempset)
+        {
+            if (m.get(tp)!=Status::Flagged)
+                ps->outer_border.insert(tp);
+        }
     }
+
 
 }
 
 void Slicer::checkInnerBorder(PosSet *ps, const Matrix &m, Pos cp)
 {
-    if (m.isInMatrix(cp) && m.get(cp)!=Status::UnKnown)
+//    if (m.isInMatrix(cp) && m.get(cp)!=Status::UnKnown)
+    if (m.isInMatrix(cp) && isNumber(m.get(cp)))
     {
         ps->insert(cp);
     }

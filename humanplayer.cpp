@@ -29,10 +29,8 @@ bool HumanPlayer::play(Board &b)
         for (const Group& t : sl.groups)
         {
             cout<<"##"<<endl;
-            cout<<t.all_unknow.size()<<endl;
-            cout<<t.innter_border.size()<<endl;
-            cout<<t.outer_border.size()<<endl;
-            GroupTester test(b.getViewMatrix(),b.OriginMineNum(), t);
+            cout<<t;
+            GroupTester test(b.getViewMatrix(),b.MineNum(), t);
             Pos p(b.RowSize(), b.ColSize());
             Pos p1(p);
             cout<<"is good: "<<test.isGood(&p)<<endl;

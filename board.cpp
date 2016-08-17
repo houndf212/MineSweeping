@@ -30,7 +30,6 @@ void Board::reset(MineLevel l)
 void Board::reset(int row, int col, int n)
 {
     assert(n<row*col);
-    origin_mine_num = n;
     mine_num = n;
     flagged_num = 0;
     real_matrix.resize(row, col, Status::Blank);

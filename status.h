@@ -16,6 +16,23 @@ enum class Status
     Number8 = '8',
 };
 
+//bool isNumber(Status s)
+//{
+//    return s!=Status::Blank && s!=Status::Flagged && s!=Status::UnKnown;
+//}
+
+inline bool isNumber(Status s)
+{
+    return     s==Status::Number1
+            || s==Status::Number2
+            || s==Status::Number3
+            || s==Status::Number4
+            || s==Status::Number5
+            || s==Status::Number6
+            || s==Status::Number7
+            || s==Status::Number8;
+}
+
 enum class MineLevel
 {
     Small,
